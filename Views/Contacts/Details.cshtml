@@ -1,0 +1,76 @@
+﻿@model PhoneBook.Data.Contact
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Contacts</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        @if (Model.ReportsToContact != null)
+        {
+        <dt>
+            @Html.Label("Reports To")
+        </dt>
+
+        <dd>
+            <a href="/Contacts/Details/@Model.ReportsToContact.ID">
+                @Model.ReportsToContact.Name @Model.ReportsToContact.Surname
+            </a>
+        </dd>
+        }
+        <dt>
+            @Html.Label("Department Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Departmant.Name)
+        </dd>
+        @if (!Model.ReportsTo.HasValue)
+        {
+        <dt>
+            @Html.Label("Manages")
+        </dt>
+
+        <dd>
+            @foreach (var employee in Model.Manages)
+            {
+            <a href="/Contacts/Details/@employee.ID">
+                <p>@employee.Name @employee.Surname</p>
+            </a>
+            }
+        </dd>
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
